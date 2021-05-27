@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="This is a travel app to check how the weather will be at the destination on the planned dates">
+        <meta name="keywords" content="travel app, weather forecast, how is the weather in, trip planner">
+        <meta name="author" content="Janaina MJ">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fend Capstone - Travel App</title>
+    </head>
+    <body>
+        <header id="app-header">
+            <div class="logo">
+                Travel App
+            </div>
+        </header>
+        
+        <main id="app-main">
+
+            <section class="container" id="user-entries">
+                <form class="holder">
+                    <div class="input">
+                        <label for="place">My trip to:</label>
+                        <input type="text" id="place" placeholder="Enter location here">
+                    </div>
+                    <div class="input">
+                        <label for="date">Departing:</label>
+                        <input type="date" id="date" placeholder="MM/DD/YYYY">
+                    </div>
+                    <button id="generate" type="submit">Generate</button>
+                </form>
+            </section>
+
+            <section class="container" id="results">
+                <div class ="holder">
+                    <div class = "title">Your planned trips:</div>
+                    <div id = "entryHolder">
+                        <div id = "date"></div> 
+                        <div id = "temp"></div>
+                        <div id = "content"></div>
+                    </div>
+                </div>
+            </section>
+          
+        </main>
+        <footer>
+            <p>This is a footer</p>
+        </footer>
+    </body>
+</html>
