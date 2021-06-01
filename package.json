@@ -4,7 +4,9 @@
   "description": "Front End Web Developer Nanodegree - Capstone - travel-app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server/index.js",
+    "build-dev": "webpack --config webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Janaina-MJ/FEND-Capstone-travel-app/issues"
   },
-  "homepage": "https://github.com/Janaina-MJ/FEND-Capstone-travel-app#readme"
+  "homepage": "https://github.com/Janaina-MJ/FEND-Capstone-travel-app#readme",
+  "dependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  }
 }
