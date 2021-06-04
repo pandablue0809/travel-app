@@ -13,6 +13,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+//Building my own proxy
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+})
+
 //** Main GET route **//
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('dist/index.html'))
