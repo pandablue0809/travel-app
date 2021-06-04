@@ -2,6 +2,9 @@
 import { encodeUrl } from './urlEncoder'
 import { getCoordinatesFromApi } from './callGeonamesApi'
 
+//Primary Object to hold data from GeoNames API
+var primaryData = {};
+
 //* APIs keys *//
 const geoNamesBaseURL = 'http://api.geonames.org/searchJSON?q='
 const geoNamesKey = 'janainamj'
@@ -23,6 +26,14 @@ function init(){
 
         //Using user inputs to call geoNames API and get Latitude and Longitude parameters
         getCoordinatesFromApi(geoNamesBaseURL, placeEncoded, geoNamesKey)
+
+        .then(data => { //saving API data (latitude, longitude and country) into primary object
+
+            console.log('API object received by the callGeoNames, showing in the promise chaining function', data);
+            primaryData = data;
+            console.log('These are the data stored on primary obj:', primaryData);
+            return primaryData;
+        })
 
     }
 }
