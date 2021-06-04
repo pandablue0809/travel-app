@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 var path = require('path');
+const fetch = require('node-fetch');
 
 app.use(express.static('dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,6 +30,24 @@ app.get('/all', sendData);
 function sendData(req, res){    
      res.send(projectData);
 }
+
+//** POST route to handle url coming from client side, call the API and send the data to client side **//
+app.post('/callAPI', async (req, res) => {
+
+    const apiUrl = req.body.urlBase;
+    
+    const resp = await fetch(apiUrl)
+
+    try{ //try to send API data to client side
+
+        const data = await resp.json();
+        res.send(data);
+
+    }catch(err) {
+        
+        console.log("error when calling API via server side", err);
+    }
+})
 
 //** Setup Server **//
 const port = 8081;
