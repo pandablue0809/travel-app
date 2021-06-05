@@ -1,6 +1,7 @@
 //Importing helper functions
 import { encodeUrl } from './urlEncoder'
 import { getCoordinatesFromApi } from './callGeonamesApi'
+import { callApiViaServerSide } from './postRequestToServer'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -8,6 +9,8 @@ var primaryData = {};
 //* APIs keys *//
 const geoNamesBaseURL = 'http://api.geonames.org/searchJSON?q='
 const geoNamesKey = 'janainamj'
+const weatherBitBaseURL = 'https://api.weatherbit.io/v2.0/forecast/daily?'
+const weatherBitKey = '723118fb280a46d5bc650aaaa26b3479'
 
 //Wrapping functionalities in a init() function to be executed only after DOM is ready
 function init(){
@@ -33,6 +36,11 @@ function init(){
             primaryData = data;
             console.log('These are the data stored on primary obj:', primaryData);
             return primaryData;
+        })
+
+        .then(primaryData => { //building url using 'lat' and 'long' parameters to call weatherBit API via server side
+
+            callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
         })
 
     }
