@@ -2,6 +2,7 @@
 import { encodeUrl } from './urlEncoder'
 import { getCoordinatesFromApi } from './callGeonamesApi'
 import { callApiViaServerSide } from './postRequestToServer'
+import { dayCounter } from './counter'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -24,7 +25,7 @@ function init(){
         event.preventDefault();
 
         const travelDate = document.getElementById('date').value;
-        let placeName = document.getElementById('place').value;
+        const placeName = document.getElementById('place').value;
         const placeEncoded = encodeUrl(placeName); //encoding user entries to use in a url
 
         //Using user inputs to call geoNames API and get Latitude and Longitude parameters
@@ -38,9 +39,25 @@ function init(){
             return primaryData;
         })
 
-        .then(primaryData => { //building url using 'lat' and 'long' parameters to call weatherBit API via server side
+        .then(primaryData => { 
 
-            callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
+            if(dayCounter(travelDate) < 0){ //if the date entered by the user is in the past
+
+                alert('Please, enter a valid date');
+
+            } else if(dayCounter(travelDate) <= 7){ //If the date entered by the user is within a week
+
+                //building url using 'lat' and 'long' parameters to call weatherBit API via server side
+                callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
+                
+                .then(console.log(`Your trip is ${dayCounter(travelDate)} days away`))
+
+            } else { //If the date entered by the user is in the future
+
+                callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: ``})
+
+                .then(console.log(`Your trip is ${dayCounter(travelDate)} days away`))
+            }
         })
 
     }
