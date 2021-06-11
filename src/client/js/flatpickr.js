@@ -1,3 +1,4 @@
+//Add date picker calendar to the date input field
 import flatpickr from 'flatpickr';
 
 flatpickr('.flatpickr.js-flatpickr-dateTime', {
@@ -6,6 +7,7 @@ flatpickr('.flatpickr.js-flatpickr-dateTime', {
     altInput: true,
     altFormat: 'd M Y',
     dateFormat: 'Y-m-d',
+    minDate: "today",
 })
 
 export { flatpickr }
