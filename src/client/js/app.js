@@ -3,6 +3,7 @@ import { encodeUrl } from './urlEncoder'
 import { getCoordinatesFromApi } from './callGeonamesApi'
 import { callApiViaServerSide } from './postRequestToServer'
 import { dayCounter } from './counter'
+import { updateUICurrentWeather } from './updateUICurrentW'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -50,7 +51,9 @@ function init(){
                 //building url using 'lat' and 'long' parameters to call weatherBit API via server side
                 callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
                 
-                .then(console.log(`Your trip is ${dayCounter(travelDate)} days away`))
+                .then((newData) => {
+
+                    updateUICurrentWeather(newData, travelDate)})
 
             } else { //If the date entered by the user is in the future
 
