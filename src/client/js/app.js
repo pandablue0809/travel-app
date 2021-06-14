@@ -4,6 +4,7 @@ import { getCoordinatesFromApi } from './callGeonamesApi'
 import { callApiViaServerSide } from './postRequestToServer'
 import { dayCounter } from './counter'
 import { updateUICurrentWeather } from './updateUICurrentW'
+import { validateForm } from './formValidator'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -25,44 +26,49 @@ function init(){
 
         event.preventDefault();
 
-        const travelDate = document.getElementById('date').value;
-        const placeName = document.getElementById('place').value;
-        const placeEncoded = encodeUrl(placeName); //encoding user entries to use in a url
+        if(validateForm() === true) {
 
-        //Using user inputs to call geoNames API and get Latitude and Longitude parameters
-        getCoordinatesFromApi(geoNamesBaseURL, placeEncoded, geoNamesKey)
+            const travelDate = document.getElementById('date').value;
+            const placeName = document.getElementById('place').value;
+            const placeEncoded = encodeUrl(placeName); //encoding user entries to use in a url
 
-        .then(data => { //saving API data (latitude, longitude and country) into primary object
+            //Using user inputs to call geoNames API and get Latitude and Longitude parameters
+            getCoordinatesFromApi(geoNamesBaseURL, placeEncoded, geoNamesKey)
 
-            console.log('API object received by the callGeoNames, showing in the promise chaining function', data);
-            primaryData = data;
-            console.log('These are the data stored on primary obj:', primaryData);
-            return primaryData;
-        })
+            .then(data => { //saving API data (latitude, longitude and country) into primary object
 
-        .then(primaryData => { 
+                console.log('API object received by the callGeoNames, showing in the promise chaining function', data);
+                primaryData = data;
+                console.log('These are the data stored on primary obj:', primaryData);
+                return primaryData;
+            })
 
-            if(dayCounter(travelDate) < 0){ //if the date entered by the user is in the past
+            .then(primaryData => { 
 
-                alert('Please, enter a valid date');
+                if(dayCounter(travelDate) < 0){ //if the date entered by the user is in the past
 
-            } else if(dayCounter(travelDate) <= 7){ //If the date entered by the user is within a week
+                    alert('Please, enter a valid date');
 
-                //building url using 'lat' and 'long' parameters to call weatherBit API via server side
-                callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
-                
-                .then((newData) => {
+                } else if(dayCounter(travelDate) <= 7){ //If the date entered by the user is within a week
 
-                    updateUICurrentWeather(newData, travelDate)})
+                    //building url using 'lat' and 'long' parameters to call weatherBit API via server side
+                    callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
+                    
+                    .then((newData) => {
 
-            } else { //If the date entered by the user is in the future
+                        updateUICurrentWeather(newData, travelDate)})
 
-                callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: ``})
+                } else { //If the date entered by the user is in the future
 
-                .then(console.log(`Your trip is ${dayCounter(travelDate)} days away`))
-            }
-        })
+                    callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: ``})
 
+                    .then(console.log(`Your trip is ${dayCounter(travelDate)} days away`))
+                }
+            })
+
+        }else {
+            alert('Please, fill in the empty fields')
+        }
     }
 }
 
