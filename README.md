@@ -1,6 +1,6 @@
 # Note: Under development
 
-# Evaluate-News-NLP Project
+# Front End Web Developer Nanodegree - Capstone: Travel Planner Web App
 
 This is a project to [Udacity](https://www.udacity.com/us)'s Front End Web Developer nanodegree.
 
@@ -52,7 +52,7 @@ Then, start the local server:
 
 ```
 $ npm run build-prod
-$ npm run start
+$ npm start
 ```
 
 The app will be running in your browser on localhost:8081
