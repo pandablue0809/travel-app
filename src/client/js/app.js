@@ -5,6 +5,7 @@ import { callApiViaServerSide } from './postRequestToServer'
 import { dayCounter } from './counter'
 import { updateUICurrentWeather } from './updateUICurrentW'
 import { validateForm } from './formValidator'
+import { getHistoricWeatherFromTravelDt } from './getHistoricWeatherFromTravelDt'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -16,6 +17,42 @@ const weatherBitBaseURL = 'https://api.weatherbit.io/v2.0/forecast/daily?'
 const weatherBitKey = '723118fb280a46d5bc650aaaa26b3479'
 const visualCrossingBaseURL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history?'
 const visualCrossingKey = 'ZQFMC9TG68TNK7BM2YRMJJFE2'
+
+//global variable (helper function)
+const buildHistoricApiURLs = (dt)=>{
+
+    const geoPlace = primaryData.latitude + ',' + primaryData.longitude;
+    const geoPlaceEncoded = encodeUrl(geoPlace);
+
+    const oneYearAgo = ()=>{
+        let setOneYear = new Date(dt);
+        setOneYear.setFullYear(setOneYear.getFullYear() - 1);
+        const oneYear = setOneYear.toISOString().split('.')[0];
+        return oneYear;
+    };
+
+    const twoYearAgo = ()=>{
+        let setTowYears = new Date(dt);
+        setTowYears.setFullYear(setTowYears.getFullYear() - 2);
+        const twoYears = setTowYears.toISOString().split('.')[0];
+        return twoYears;
+    };
+
+    const threeYearAgo = ()=>{
+        let setThreeYears = new Date(dt);
+        setThreeYears.setFullYear(setThreeYears.getFullYear() - 3);
+        const threeYears = setThreeYears.toISOString().split('.')[0];
+        return threeYears;
+    };
+
+    const urls = {
+        'apiURL1': `${visualCrossingBaseURL}&aggregateHours=24&startDateTime=${oneYearAgo()}&endDateTime=${oneYearAgo()}&unitGroup=metric&contentType=json&location=${geoPlaceEncoded}&locationMode=single&key=${visualCrossingKey}`,
+        'apiURL2': `${visualCrossingBaseURL}&aggregateHours=24&startDateTime=${twoYearAgo()}&endDateTime=${twoYearAgo()}&unitGroup=metric&contentType=json&location=${geoPlaceEncoded}&locationMode=single&key=${visualCrossingKey}`,
+        'apiURL3': `${visualCrossingBaseURL}&aggregateHours=24&startDateTime=${threeYearAgo()}&endDateTime=${threeYearAgo()}&unitGroup=metric&contentType=json&location=${geoPlaceEncoded}&locationMode=single&key=${visualCrossingKey}`
+    }
+
+    return urls;
+}
 
 //Wrapping functionalities in a init() function to be executed only after DOM is ready
 function init(){
@@ -58,89 +95,24 @@ function init(){
                     
                     .then((newData) => {
 
-                        updateUICurrentWeather(newData, travelDate)})
+                        updateUICurrentWeather(newData, travelDate)});
 
-                } else { //If the date entered by the user is in the future fetch historical weather for the last 3 years
+                } else if(dayCounter(travelDate) > 7 && dayCounter(travelDate) <= 365){ //If the date entered by the user is within one year fetch historical weather for the last 3 years from the Travel Date
+ 
+                    const apiUrls = buildHistoricApiURLs(travelDate);
+                    const url1 = apiUrls.apiURL1;
+                    const url2 = apiUrls.apiURL2;
+                    const url3 = apiUrls.apiURL3;
 
-                    /* The 3 years of historical weather data are being fetched in 3 separate GET requests due to the
-                    free API registration plan limitation */
+                    getHistoricWeatherFromTravelDt(primaryData, url1, url2, url3)
 
-                    (function getHistoricalWeather(){
-                        
-                        console.log('primeira coisa', primaryData);
-                        const geoPlace = primaryData.latitude + ',' + primaryData.longitude;
-                        const geoPlaceEncoded = encodeUrl(geoPlace);
+                    .then(newObj =>{
+                        console.log('primaryData obj preview:', newObj)
+                    })
 
-                        const oneYearAgo = ()=>{
-                            let setOneYear = new Date(travelDate);
-                            setOneYear.setFullYear(setOneYear.getFullYear() - 1);
-                            const oneYear = setOneYear.toISOString().split('.')[0];
-                            return oneYear;
-                        };
-
-                        const twoYearAgo = ()=>{
-                            let setTowYears = new Date(travelDate);
-                            setTowYears.setFullYear(setTowYears.getFullYear() - 2);
-                            const twoYears = setTowYears.toISOString().split('.')[0];
-                            return twoYears;
-                        };
-
-                        const threeYearAgo = ()=>{
-                            let setThreeYears = new Date(travelDate);
-                            setThreeYears.setFullYear(setThreeYears.getFullYear() - 3);
-                            const threeYears = setThreeYears.toISOString().split('.')[0];
-                            return threeYears;
-                        };
-
-
-                        callApiViaServerSide('http://localhost:8081/callAPI', 
-                        {urlBase: `${visualCrossingBaseURL}&aggregateHours=24&startDateTime=${oneYearAgo()}&endDateTime=${oneYearAgo()}&unitGroup=metric&contentType=json&location=${geoPlaceEncoded}&locationMode=single&key=${visualCrossingKey}`})
-
-                            .then(data => {
-
-                                primaryData.oneYearPredictions = {
-                                    date: data.location.values[0].datetimeStr,
-                                    conditions: data.location.values[0].conditions,
-                                    maxT: data.location.values[0].maxt,
-                                    minT: data.location.values[0].mint,
-                                    precipitation: data.location.values[0].precip
-                                };
-                            })
-
-                        callApiViaServerSide('http://localhost:8081/callAPI', 
-                        {urlBase: `${visualCrossingBaseURL}&aggregateHours=24&startDateTime=${twoYearAgo()}&endDateTime=${twoYearAgo()}&unitGroup=metric&contentType=json&location=${geoPlaceEncoded}&locationMode=single&key=${visualCrossingKey}`})
-
-                            .then(data => {
-
-                                primaryData.twoYearPredictions = {
-                                    date: data.location.values[0].datetimeStr,
-                                    conditions: data.location.values[0].conditions,
-                                    maxT: data.location.values[0].maxt,
-                                    minT: data.location.values[0].mint,
-                                    precipitation: data.location.values[0].precip
-                                };
-                            })
-
-                        callApiViaServerSide('http://localhost:8081/callAPI', 
-                        {urlBase: `${visualCrossingBaseURL}&aggregateHours=24&startDateTime=${threeYearAgo()}&endDateTime=${threeYearAgo()}&unitGroup=metric&contentType=json&location=${geoPlaceEncoded}&locationMode=single&key=${visualCrossingKey}`})
-
-                            .then(data => {
-
-                                primaryData.threeYearPredictions = {
-                                    date: data.location.values[0].datetimeStr,
-                                    conditions: data.location.values[0].conditions,
-                                    maxT: data.location.values[0].maxt,
-                                    minT: data.location.values[0].mint,
-                                    precipitation: data.location.values[0].precip
-                                };
-
-                                return primaryData;
-                            })
-
-                            .then(primaryData =>{
-                                console.log('use data stored to updateUI', primaryData)
-                            })
-                    })();
+                } else { //If the date entered by the user is within one year fetch historical weather for the last 3 years from Current Date
+ 
+                    alert('Your trip is more than 365 days away from now');
                 }
             })
 
