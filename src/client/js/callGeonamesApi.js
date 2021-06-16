@@ -8,7 +8,8 @@ const getCoordinatesFromApi = async(baseUrl, place, apiKey)=>{
         const data = {
             latitude: apiData.geonames[0].lat,
             longitude: apiData.geonames[0].lng,
-            country: apiData.geonames[0].countryName
+            country: apiData.geonames[0].countryName,
+            city: apiData.geonames[0].toponymName
         }
         console.log('API object received by the GeoNames function', apiData);
         return data;
