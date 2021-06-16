@@ -2,7 +2,7 @@ import { callApiViaServerSide } from "./postRequestToServer"
 
 /* The 3 years of historical weather data are being fetched in 3 separate GET requests due to the
 free API registration plan limitation */
-const getHistoricWeatherFromTravelDt = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
+const getHistoricWeather = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
 
     const respOne = await callApiViaServerSide('http://localhost:8081/callAPI', {urlBase:apiUrl1})
     const respTwo = await callApiViaServerSide('http://localhost:8081/callAPI', {urlBase:apiUrl2})
@@ -43,8 +43,9 @@ const getHistoricWeatherFromTravelDt = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
         return obj;
 
     } catch(err){
-        console.log('Erro tentando fazer uma promisse', err);
+        console.log('Error trying to get historical weather', err);
+        alert("Sorry, we couldn't complete your request. Please try again")
     }
 }
 
-export { getHistoricWeatherFromTravelDt }
+export { getHistoricWeather }

@@ -5,7 +5,7 @@ import { callApiViaServerSide } from './postRequestToServer'
 import { dayCounter } from './counter'
 import { updateUICurrentWeather } from './updateUICurrentW'
 import { validateForm } from './formValidator'
-import { getHistoricWeatherFromTravelDt } from './getHistoricWeatherFromTravelDt'
+import { getHistoricWeather } from './getHistoricWeather'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -18,9 +18,26 @@ const weatherBitKey = '723118fb280a46d5bc650aaaa26b3479'
 const visualCrossingBaseURL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history?'
 const visualCrossingKey = 'ZQFMC9TG68TNK7BM2YRMJJFE2'
 
-//global variable (helper function)
-const buildHistoricApiURLs = (dt)=>{
+//start - global variable (helper function)
+const buildHistoricApiURLs = (dateInput)=>{
 
+    function setTravelDate(){
+
+        //if the trip is within one year, use the travel date entered by the user to fetch historical weather
+        if(dayCounter(dateInput) > 7 && dayCounter(dateInput) <= 365){
+            return dateInput; //travel date entered by the user
+
+        //if the trip is more than one year away, use a new set date (based on the current year) to fetch historical weather
+        } else{
+            let todayDate = new Date();
+            const currentYear = todayDate.getFullYear();
+            const travelDay = new Date(dateInput);
+            const newTravelDate = travelDay.setFullYear(currentYear);
+            return newTravelDate;
+        }
+    }
+
+    const dt = setTravelDate();
     const geoPlace = primaryData.latitude + ',' + primaryData.longitude;
     const geoPlaceEncoded = encodeUrl(geoPlace);
 
@@ -52,7 +69,8 @@ const buildHistoricApiURLs = (dt)=>{
     }
 
     return urls;
-}
+} 
+//end - global variable (helper function)
 
 //Wrapping functionalities in a init() function to be executed only after DOM is ready
 function init(){
@@ -97,22 +115,18 @@ function init(){
 
                         updateUICurrentWeather(newData, travelDate)});
 
-                } else if(dayCounter(travelDate) > 7 && dayCounter(travelDate) <= 365){ //If the date entered by the user is within one year fetch historical weather for the last 3 years from the Travel Date
+                } else { //If the date entered by the user is in the future
  
                     const apiUrls = buildHistoricApiURLs(travelDate);
                     const url1 = apiUrls.apiURL1;
                     const url2 = apiUrls.apiURL2;
                     const url3 = apiUrls.apiURL3;
 
-                    getHistoricWeatherFromTravelDt(primaryData, url1, url2, url3)
+                    getHistoricWeather(primaryData, url1, url2, url3)
 
                     .then(newObj =>{
                         console.log('primaryData obj preview:', newObj)
                     })
-
-                } else { //If the date entered by the user is within one year fetch historical weather for the last 3 years from Current Date
- 
-                    alert('Your trip is more than 365 days away from now');
                 }
             })
 
