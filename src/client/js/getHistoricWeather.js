@@ -17,7 +17,9 @@ const getHistoricWeather = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
             conditions: storeDataOne.location.values[0].conditions,
             maxT: storeDataOne.location.values[0].maxt,
             minT: storeDataOne.location.values[0].mint,
-            precipitation: storeDataOne.location.values[0].precip
+            snow: storeDataOne.location.values[0].snowdepth,
+            precipitation: storeDataOne.location.values[0].precip,
+            precipitationCover: storeDataOne.location.values[0].precipcover
         }
 
         const storeDataTwo = await respTwo;
@@ -27,7 +29,9 @@ const getHistoricWeather = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
             conditions: storeDataTwo.location.values[0].conditions,
             maxT: storeDataTwo.location.values[0].maxt,
             minT: storeDataTwo.location.values[0].mint,
-            precipitation: storeDataTwo.location.values[0].precip
+            snow: storeDataTwo.location.values[0].snowdepth,
+            precipitation: storeDataTwo.location.values[0].precip,
+            precipitationCover: storeDataTwo.location.values[0].precipcover
         }
 
         const storeDataThree = await respThree;
@@ -37,7 +41,9 @@ const getHistoricWeather = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
             conditions: storeDataThree.location.values[0].conditions,
             maxT: storeDataThree.location.values[0].maxt,
             minT: storeDataThree.location.values[0].mint,
-            precipitation: storeDataThree.location.values[0].precip
+            snow: storeDataThree.location.values[0].snowdepth,
+            precipitation: storeDataThree.location.values[0].precip,
+            precipitationCover: storeDataThree.location.values[0].precipcover
         }
 
         return obj;

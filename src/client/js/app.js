@@ -3,7 +3,7 @@ import { encodeUrl } from './urlEncoder'
 import { getCoordinatesFromApi } from './callGeonamesApi'
 import { callApiViaServerSide } from './postRequestToServer'
 import { dayCounter } from './counter'
-import { updateUICurrentWeather } from './updateUICurrentW'
+import { updateUI } from './updateUICurrentW'
 import { validateForm } from './formValidator'
 import { getHistoricWeather } from './getHistoricWeather'
 
@@ -113,7 +113,8 @@ function init(){
                     
                     .then((newData) => {
 
-                        updateUICurrentWeather(newData, travelDate)});
+                        updateUI(newData, travelDate)
+                    });
 
                 } else { //If the date entered by the user is in the future
  
@@ -125,8 +126,11 @@ function init(){
                     getHistoricWeather(primaryData, url1, url2, url3)
 
                     .then(newObj =>{
-                        console.log('primaryData obj preview:', newObj)
-                    })
+                        
+                        console.log('primary preview:', newObj)
+                        updateUI(newObj, travelDate)
+                    });
+
                 }
             })
 
