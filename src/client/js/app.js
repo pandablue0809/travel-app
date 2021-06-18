@@ -3,7 +3,7 @@ import { encodeUrl } from './urlEncoder'
 import { getCoordinatesFromApi } from './callGeonamesApi'
 import { callApiViaServerSide } from './postRequestToServer'
 import { dayCounter } from './counter'
-import { updateUI } from './updateUICurrentW'
+import { updateUI } from './updateUI'
 import { validateForm } from './formValidator'
 import { getHistoricWeather } from './getHistoricWeather'
 
@@ -24,7 +24,7 @@ const buildHistoricApiURLs = (dateInput)=>{
     function setTravelDate(){
 
         //if the trip is within one year, use the travel date entered by the user to fetch historical weather
-        if(dayCounter(dateInput) > 7 && dayCounter(dateInput) <= 365){
+        if(dayCounter(dateInput) <= 365){
             return dateInput; //travel date entered by the user
 
         //if the trip is more than one year away, use a new set date (based on the current year) to fetch historical weather
@@ -82,6 +82,7 @@ function init(){
     function performAction(event){
 
         event.preventDefault();
+        document.getElementById('results').innerHTML = `<div></div>`;
 
         if(validateForm() === true) {
 
@@ -141,3 +142,4 @@ function init(){
 }
 
 export { init }
+export { buildHistoricApiURLs }
