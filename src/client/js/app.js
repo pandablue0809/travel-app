@@ -6,6 +6,7 @@ import { dayCounter } from './counter'
 import { updateUI } from './updateUI'
 import { validateForm } from './formValidator'
 import { getHistoricWeather } from './getHistoricWeather'
+import { getPlaceImg } from './getPlaceImg'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -17,6 +18,8 @@ const weatherBitBaseURL = 'https://api.weatherbit.io/v2.0/forecast/daily?'
 const weatherBitKey = '723118fb280a46d5bc650aaaa26b3479'
 const visualCrossingBaseURL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history?'
 const visualCrossingKey = 'ZQFMC9TG68TNK7BM2YRMJJFE2'
+const pixabayImgBaseURL = 'https://pixabay.com/api/'
+const pixabayKey = '22140600-67da7abf40f7e47eef517beac'
 
 //start - global variable (helper function)
 const buildHistoricApiURLs = (dateInput)=>{
@@ -97,6 +100,7 @@ function init(){
 
                 console.log('API object received by the callGeoNames, showing in the promise chaining function', data);
                 primaryData = data;
+                getPlaceImg(primaryData, pixabayImgBaseURL, placeEncoded, pixabayKey);
                 console.log('These are the data stored on primary obj:', primaryData);
                 return primaryData;
             })
