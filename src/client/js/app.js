@@ -110,7 +110,7 @@ function init(){
                 return primaryData;
             })
 
-            .then(primaryData => { 
+            .then(() => { 
 
                 if(dayCounter(travelDate) < 0){ //if the date entered by the user is in the past
 
@@ -124,7 +124,7 @@ function init(){
                         
                         .then((newData) => {
 
-                            updateUI(newData, travelDate)
+                            updateUI(newData, travelDate, primaryData)
                         });
                     
                     } catch(err){
@@ -145,7 +145,7 @@ function init(){
                         .then(newObj =>{
                             
                             console.log('primary preview:', newObj)
-                            updateUI(newObj, travelDate)
+                            updateUI(newObj, travelDate, primaryData)
                         });
 
                     }catch(err){

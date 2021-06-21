@@ -82,7 +82,10 @@ function updateUIHistoricWeather(apiObject){
     </div>`;
 }
 
-function updateUI(apiObject, userInputDate){
+function updateUI(apiObject, userInputDate, primaryDataObj){
+
+    const country = primaryDataObj.country;
+    const city = primaryDataObj.city;
 
     function appendHistoricalWeather(){
 
@@ -90,13 +93,12 @@ function updateUI(apiObject, userInputDate){
         const url1 = apiUrls.apiURL1;
         const url2 = apiUrls.apiURL2;
         const url3 = apiUrls.apiURL3;
-        const mockPrimaryDataObj = {}
     
-        getHistoricWeather(mockPrimaryDataObj, url1, url2, url3)
+        getHistoricWeather(primaryDataObj, url1, url2, url3)
     
         .then(newObj =>{
             
-            console.log('mock-primary preview:', newObj);
+            console.log('primaryData obj preview:', newObj);
             updateUIHistoricWeather(newObj);
         });
     }
@@ -135,9 +137,6 @@ function updateUI(apiObject, userInputDate){
 
                 if(apiDate === userInputDate){
 
-                    const city = apiObject['city_name'];
-                    const country = apiObject['country_code'];
-                
                     const sunriseUTC = day['sunrise_ts'];
                     const sunrise = function(){
                         let sunriseUnixTimestamp = sunriseUTC * 1000;
@@ -195,8 +194,6 @@ function updateUI(apiObject, userInputDate){
 
     } else {
 
-        const cityName = apiObject.city;
-        const countryName = apiObject.country;
         const historicalDate = (dte)=>{
             const td = new Date(dte);
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -248,13 +245,13 @@ function updateUI(apiObject, userInputDate){
         newElement.id = 'travel-info-historical';
         
         newElement.innerHTML = `<div class="holder result-header">
-            <h2 class="result-title">My trip to: ${cityName}, ${countryName}</h2>
+            <h2 class="result-title">My trip to: ${city}, ${country}</h2>
             <h2 class="result-date">Departing: ${travelDay(userInputDate)}</h2>
         </div>
 
         <div class="result-body">
             <div>
-                <p class="counter">${cityName}, ${countryName} is ${daysAway()}</p>
+                <p class="counter">${city}, ${country} is ${daysAway()}</p>
             </div>
             
             <div class="weather-holder'>
