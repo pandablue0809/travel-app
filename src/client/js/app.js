@@ -74,6 +74,14 @@ const buildHistoricApiURLs = (dateInput)=>{
 
     return urls;
 } 
+
+let travelNumber = 0;
+
+const TravelNumberCounter = (counter)=>{
+   
+    counter+= 1;
+    return counter;
+}
 //end - global variable (helper function)
 
 //Wrapping functionalities in a init() function to be executed only after DOM is ready
@@ -86,14 +94,22 @@ function init(){
     function performAction(event){
 
         event.preventDefault();
-        document.getElementById('results').innerHTML = `<div></div>`;
+        //document.getElementById('results').innerHTML = `<div></div>`;
+        
 
         if(validateForm() === true) {
 
             const travelDate = document.getElementById('date').value;
             const placeName = document.getElementById('place').value;
             const placeEncoded = encodeUrl(placeName); //encoding user entries to use in a url
-            
+
+            const section = document.getElementById('results');
+            const divTripInfo = document.createElement('div');
+            divTripInfo.setAttribute('class', 'holder trip-holder');
+            travelNumber += 1;
+            divTripInfo.setAttribute('data-travel-number', `${travelNumber}`);
+            section.insertAdjacentElement('afterbegin', divTripInfo);
+
             //Using user inputs to call geoNames API and get Latitude and Longitude parameters
             getCoordinatesFromApi(geoNamesBaseURL, placeEncoded, geoNamesKey)
 
@@ -104,7 +120,7 @@ function init(){
                 getPlaceImg(primaryData, pixabayImgBaseURL, pixabayKey)
                 .then(()=>{
 
-                    displayImg(primaryData)
+                    displayImg(primaryData, travelNumber)
                 })
                 console.log('These are the data stored on primary obj:', primaryData);
                 return primaryData;
@@ -124,7 +140,7 @@ function init(){
                         
                         .then((newData) => {
 
-                            updateUI(newData, travelDate, primaryData)
+                            updateUI(newData, travelDate, primaryData, travelNumber)
                         });
                     
                     } catch(err){
@@ -145,7 +161,7 @@ function init(){
                         .then(newObj =>{
                             
                             console.log('primary preview:', newObj)
-                            updateUI(newObj, travelDate, primaryData)
+                            updateUI(newObj, travelDate, primaryData, travelID)
                         });
 
                     }catch(err){
