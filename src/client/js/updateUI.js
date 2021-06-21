@@ -2,7 +2,7 @@ import { dayCounter } from './counter'
 import { buildHistoricApiURLs } from './app'
 import { getHistoricWeather } from './getHistoricWeather'
 
-function updateUIHistoricWeather(apiObject){
+function updateUIHistoricWeather(apiObject, id){
 
     const historicalDate = (dte)=>{
         const td = new Date(dte);
@@ -48,10 +48,11 @@ function updateUIHistoricWeather(apiObject){
     const threeYearsSnow = apiObject.threeYearPredictions.snow;
     const threeYearsSnowResult = setSnowResult(threeYearsSnow);
 
-    const section = document.getElementById('travel-info-historical');
-    section.innerHTML = `<div class="weather-holder'>
-
-        <h3 class="result-subtitle">Historical weather on this same day for the past 3 years:</h3>
+    //const section = document.getElementById('travel-info-historical');
+    const section = document.querySelector(`[weather-travel-number='${id}']`);
+    const newElement = document.createElement('div');
+    newElement.setAttribute('class', 'weather-holder');
+    newElement.innerHTML = `<h3 class="result-subtitle">Historical weather on this same day for the past 3 years:</h3>
 
         <div class="round-box-holder">
             <h4 class="result-year">${historicalDate(oneYearAgo)}</h4>
@@ -78,14 +79,25 @@ function updateUIHistoricWeather(apiObject){
             <p class="chance-of-rain">Rain record: It rained over ${threeYearsRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${threeYearsSnowResult} cm</p>
             <p class="round-box large-box">Weather description: ${threeYearsDescription}</p>
-        </div>
-    </div>`;
+        </div>`;
+
+        section.insertAdjacentElement('beforeend', newElement);
 }
 
-function updateUI(apiObject, userInputDate, primaryDataObj){
+function updateUI(apiObject, userInputDate, primaryDataObj, id){
 
     const country = primaryDataObj.country;
     const city = primaryDataObj.city;
+    const travelDiv = document.querySelector(`[data-travel-number='${id}']`)
+
+    const removeTrip = ()=>{
+
+        const section = document.getElementById('results')
+        const travelDiv = document.querySelector(`[data-travel-number='${id}']`)
+        section.removeChild(travelDiv);
+        //console.log('testaaaaaando')
+        
+    }
 
     function appendHistoricalWeather(){
 
@@ -99,7 +111,7 @@ function updateUI(apiObject, userInputDate, primaryDataObj){
         .then(newObj =>{
             
             console.log('primaryData obj preview:', newObj);
-            updateUIHistoricWeather(newObj);
+            updateUIHistoricWeather(newObj, id);
         });
     }
 
@@ -153,11 +165,11 @@ function updateUI(apiObject, userInputDate, primaryDataObj){
                         return sunsetTime;
                     };
 
-                    const section = document.getElementById('results');
+                    //const travelDiv = document.getElementById('travel-info');
                     const fragment = document.createDocumentFragment();
                     const newElement = document.createElement('div');
-                    newElement.setAttribute('class', 'holder entry-holder');
-                    newElement.id = 'travel-info';
+                    newElement.setAttribute('class', 'holder info-holder');
+                    newElement.setAttribute('weather-travel-number', `${id}`);
                     newElement.innerHTML = `<div class="holder result-header">
                         <h2 class="result-title">My trip to: ${city}, ${country}</h2>
                         <h2 class="result-date">Departing: ${travelDay(userInputDate)}</h2>
@@ -181,10 +193,17 @@ function updateUI(apiObject, userInputDate, primaryDataObj){
                         <div id="travel-info-historical" class="holder entry-holder"></div>
                     </div>`;
 
+                    const button = document.createElement('button');
+                    button.setAttribute('class', 'remove-trip');
+                    button.innerText = 'Delete Trip';
+                    button.onclick=removeTrip;
                     fragment.appendChild(newElement);
-                    section.appendChild(fragment);
+                    fragment.appendChild(button);
+                    travelDiv.appendChild(fragment);
 
                     document.getElementById('btn-get-historical').addEventListener('click', appendHistoricalWeather)
+                    //const btn = document.querySelector('.remove-trip');
+                    //btn.addEventListener('click', removeTrip);
                 }
             }
 
@@ -238,7 +257,7 @@ function updateUI(apiObject, userInputDate, primaryDataObj){
         const threeYearsSnow = apiObject.threeYearPredictions.snow;
         const threeYearsSnowResult = setSnowResult(threeYearsSnow);
 
-        const section = document.getElementById('results');
+        //const travelDiv = document.getElementById('travel-info');
         const fragment = document.createDocumentFragment();
         const newElement = document.createElement('div');
         newElement.setAttribute('class', 'holder entry-holder');
@@ -285,10 +304,13 @@ function updateUI(apiObject, userInputDate, primaryDataObj){
                     <p class="round-box large-box">Weather description: ${threeYearsDescription}</p>
                 </div>
             </div>
-        </div>`;
+        </div>
+        <button id="remove-trip">Delete Trip</button>`;
 
         fragment.appendChild(newElement);
-        section.appendChild(fragment);
+        travelDiv.appendChild(fragment);
+
+        document.getElementById('remove-trip').addEventListener('click', removeTrip)
     }
 }
 

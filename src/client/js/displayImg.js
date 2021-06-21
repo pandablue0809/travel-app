@@ -1,36 +1,38 @@
-function displayImg(primaryObj){
+function displayImg(primaryObj, id){
 
     try{
         const placeImg = primaryObj.destinationImg;
         const countryImg = primaryObj.countryImg;
 
+        const travelDiv = document.querySelector(`[data-travel-number='${id}']`)
+
         if(placeImg === undefined && countryImg === undefined){
 
             const defaultImg = 'https://cdn.pixabay.com/photo/2018/09/26/20/20/workplace-3705534_1280.jpg';
-            const section = document.getElementById('results');
+            
             const newElement = document.createElement('img');
             newElement.setAttribute('alt', `picture of the destination`);
             newElement.setAttribute('src', `${defaultImg}`);
-            newElement.id = 'travel-img';
-            section.insertAdjacentElement('afterbegin', newElement);
+            newElement.setAttribute('class', 'travel-img');
+            travelDiv.appendChild(newElement)
+            
 
         } else if(placeImg === undefined){
 
-            const section = document.getElementById('results');
             const newElement = document.createElement('img');
             newElement.setAttribute('alt', `picture of the destination`);
             newElement.setAttribute('src', `${countryImg}`);
-            newElement.id = 'travel-img';
-            section.insertAdjacentElement('afterbegin', newElement);
+            newElement.setAttribute('class', 'travel-img');
+            travelDiv.appendChild(newElement);
             
         }else{
 
-            const section = document.getElementById('results');
+            
             const newElement = document.createElement('img');
             newElement.setAttribute('alt', `picture of the destination`);
             newElement.setAttribute('src', `${placeImg}`);
-            newElement.id = 'travel-img';
-            section.insertAdjacentElement('afterbegin', newElement);
+            newElement.setAttribute('class', 'travel-img');
+            travelDiv.appendChild(newElement);
         }
         
     } catch(err){

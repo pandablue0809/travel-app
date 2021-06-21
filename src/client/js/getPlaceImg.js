@@ -16,7 +16,7 @@ const getPlaceImg = async(primaryObj, baseUrl, apiKey)=>{
 
             const destinationImg = await respOne.json();
             primaryObj.destinationImg = destinationImg.hits[0].largeImageURL;
-            console.log('primaryObj preview from Pixabay function', apiData);
+            console.log('primaryObj preview from Pixabay function', primaryObj);
             
         }catch(error){
             
@@ -27,7 +27,7 @@ const getPlaceImg = async(primaryObj, baseUrl, apiKey)=>{
 
             const countryImg = await respTwo.json();
             primaryObj.countryImg = countryImg.hits[0].largeImageURL;
-            console.log('primaryObj preview from Pixabay function', apiData);
+            console.log('primaryObj preview from Pixabay function', primaryObj);
             return primaryObj;
 
         }catch(err){
