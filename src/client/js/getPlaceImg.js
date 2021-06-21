@@ -1,17 +1,43 @@
-const getPlaceImg = async(primaryObj, baseUrl, place, apiKey)=>{
+import { encodeUrl } from './urlEncoder'
 
-    const res = await fetch(`${baseUrl}?key=${apiKey}&q=${place}&per_page=3&category=nature&safesearch=true&orientation=horizontal`)
+const getPlaceImg = async(primaryObj, baseUrl, apiKey)=>{
 
     try{
-        const apiData = await res.json();
-        //const placeImg = primaryObj.img = apiData.hits[0].largeImageURL;
-        const data = primaryObj.img = apiData.hits[0].largeImageURL;
-        console.log('API object received by the Pixabay function', apiData);
-        return data;
-        
-    }catch(error){
-        
-        console.log('Error getting image from Pixabay', error);
+
+        const enteredCity = primaryObj.city;
+        const enteredCountry = primaryObj.country;
+        const destination = encodeUrl(enteredCity);
+        const countryDestination = encodeUrl(enteredCountry);
+
+        const respOne = await fetch(`${baseUrl}?key=${apiKey}&q=${destination}&per_page=3&category=nature&safesearch=true&orientation=horizontal`)
+        const respTwo = await fetch(`${baseUrl}?key=${apiKey}&q=${countryDestination}&per_page=3&category=nature&safesearch=true&orientation=horizontal`)
+
+        try{
+
+            const destinationImg = await respOne.json();
+            primaryObj.destinationImg = destinationImg.hits[0].largeImageURL;
+            console.log('primaryObj preview from Pixabay function', apiData);
+            
+        }catch(error){
+            
+            console.log('Error getting city image from Pixabay', error);
+        }
+
+        try{
+
+            const countryImg = await respTwo.json();
+            primaryObj.countryImg = countryImg.hits[0].largeImageURL;
+            console.log('primaryObj preview from Pixabay function', apiData);
+            return primaryObj;
+
+        }catch(err){
+
+            console.log('Error getting country image from Pixabay', err);
+        }
+
+    }catch(err){
+
+        console.log('Error getting image from for the location informed', err)
     }
 }
 
