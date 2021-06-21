@@ -7,6 +7,7 @@ import { updateUI } from './updateUI'
 import { validateForm } from './formValidator'
 import { getHistoricWeather } from './getHistoricWeather'
 import { getPlaceImg } from './getPlaceImg'
+import { displayImg } from './displayImg'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -100,7 +101,11 @@ function init(){
 
                 console.log('API object received by the callGeoNames, showing in the promise chaining function', data);
                 primaryData = data;
-                getPlaceImg(primaryData, pixabayImgBaseURL, placeEncoded, pixabayKey);
+                getPlaceImg(primaryData, pixabayImgBaseURL, placeEncoded, pixabayKey)
+                .then(()=>{
+
+                    displayImg(primaryData)
+                })
                 console.log('These are the data stored on primary obj:', primaryData);
                 return primaryData;
             })
@@ -135,7 +140,6 @@ function init(){
                         console.log('primary preview:', newObj)
                         updateUI(newObj, travelDate)
                     });
-
                 }
             })
 
