@@ -101,7 +101,7 @@ function init(){
 
                 console.log('API object received by the callGeoNames, showing in the promise chaining function', data);
                 primaryData = data;
-                getPlaceImg(primaryData, pixabayImgBaseURL, placeEncoded, pixabayKey)
+                getPlaceImg(primaryData, pixabayImgBaseURL, pixabayKey)
                 .then(()=>{
 
                     displayImg(primaryData)
