@@ -118,28 +118,40 @@ function init(){
 
                 } else if(dayCounter(travelDate) <= 7){ //If the date entered by the user is within a week
 
-                    //building url using 'lat' and 'long' parameters to call weatherBit API via server side
-                    callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
+                    try{
+                        //building url using 'lat' and 'long' parameters to call weatherBit API via server side
+                        callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
+                        
+                        .then((newData) => {
+
+                            updateUI(newData, travelDate)
+                        });
                     
-                    .then((newData) => {
+                    } catch(err){
 
-                        updateUI(newData, travelDate)
-                    });
-
+                        console.log('Error when building URL to callApiViaServerSide')
+                    }
+                    
                 } else { //If the date entered by the user is in the future
  
-                    const apiUrls = buildHistoricApiURLs(travelDate);
-                    const url1 = apiUrls.apiURL1;
-                    const url2 = apiUrls.apiURL2;
-                    const url3 = apiUrls.apiURL3;
+                    try{
+                        const apiUrls = buildHistoricApiURLs(travelDate);
+                        const url1 = apiUrls.apiURL1;
+                        const url2 = apiUrls.apiURL2;
+                        const url3 = apiUrls.apiURL3;
 
-                    getHistoricWeather(primaryData, url1, url2, url3)
+                        getHistoricWeather(primaryData, url1, url2, url3)
 
-                    .then(newObj =>{
-                        
-                        console.log('primary preview:', newObj)
-                        updateUI(newObj, travelDate)
-                    });
+                        .then(newObj =>{
+                            
+                            console.log('primary preview:', newObj)
+                            updateUI(newObj, travelDate)
+                        });
+
+                    }catch(err){
+
+                        console.log('Error when building historical API URL', err)
+                    }
                 }
             })
 

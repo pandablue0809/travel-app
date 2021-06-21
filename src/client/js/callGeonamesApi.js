@@ -4,6 +4,7 @@ const getCoordinatesFromApi = async(baseUrl, place, apiKey)=>{
     const res = await fetch(baseUrl + place + "&maxRows=10&username=" + apiKey)
 
     try{
+
         const apiData = await res.json();
         const data = {
             latitude: apiData.geonames[0].lat,
@@ -13,8 +14,11 @@ const getCoordinatesFromApi = async(baseUrl, place, apiKey)=>{
         }
         console.log('API object received by the GeoNames function', apiData);
         return data;
+
     }catch(error){
+
         console.log('Error getting object from API', error);
+        alert('Please enter a valid location');
     }
 }
 
