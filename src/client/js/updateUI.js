@@ -55,30 +55,30 @@ function updateUIHistoricWeather(apiObject, id){
     newElement.innerHTML = `<h3 class="result-subtitle">Historical weather on this same day for the past 3 years:</h3>
 
         <div class="round-box-holder">
-            <h4 class="result-year">${historicalDate(oneYearAgo)}</h4>
+            <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(oneYearAgo)}</h4>
             <p class="low-temp">Low: ${oneYearMinTemp} °C</p>
             <p class="high-temp">High: ${oneYearMaxTemp} °C</p>
             <p class="chance-of-rain">Rain record: It rained over ${oneYearRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${oneYearSnowResult} cm</p>
-            <p class="round-box large-box">Weather description: ${oneYearDescription}</p>
+            <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${oneYearDescription}</p>
         </div>
 
         <div class="round-box-holder">
-            <h4 class="result-year">${historicalDate(twoYearsAgo)}</h4>
+            <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(twoYearsAgo)}</h4>
             <p class="low-temp">Low: ${twoYearsMinTemp} °C</p>
             <p class="high-temp">High: ${twoYearsMaxTemp} °C</p>
             <p class="chance-of-rain">Rain record: It rained over ${twoYearsRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${twoYearsSnowResult} cm</p>
-            <p class="round-box large-box">Weather description: ${twoYearsDescription}</p>
+            <p class="round-box large-box"><i class="icon fas fa-cloud"></i>: ${twoYearsDescription}</p>
         </div>
 
         <div class="round-box-holder">
-            <h4 class="result-year">${historicalDate(threeYearsAgo)}</h4>
+            <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(threeYearsAgo)}</h4>
             <p class="low-temp">Low: ${threeYearsMinTemp} °C</p>
             <p class="high-temp">High: ${threeYearsMaxTemp} °C</p>
             <p class="chance-of-rain">Rain record: It rained over ${threeYearsRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${threeYearsSnowResult} cm</p>
-            <p class="round-box large-box">Weather description: ${threeYearsDescription}</p>
+            <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${threeYearsDescription}</p>
         </div>`;
 
         section.insertAdjacentElement('beforeend', newElement);
@@ -171,12 +171,13 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
                     newElement.setAttribute('class', 'holder info-holder');
                     newElement.setAttribute('weather-travel-number', `${id}`);
                     newElement.innerHTML = `<div class="holder result-header">
-                        <h2 class="result-title">My trip to: ${city}, ${country}</h2>
-                        <h2 class="result-date">Departing: ${travelDay(userInputDate)}</h2>
+                        <h2 class="result-title"><i class="icon fas fa-map-marker-alt"></i> My trip to: ${city}, ${country}</h2>
+                        <h2 class="result-date"><i class="icon far fa-calendar-check"></i> Departing: ${travelDay(userInputDate)}</h2>
                     </div>
                     <div class="result-body">
-                        <div>
-                            <p class="counter">${city}, ${country} is ${daysAway()}</p>
+                        <div class="counter">
+                            <i class="icon counter-icon far fa-clock"></i>
+                            <p class="counter-text">${city}, ${country} is ${daysAway()}</p>
                         </div>
                     
                         <div class="weather-holder">
@@ -187,9 +188,9 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
                             <p class="snow-record">Snowfall: ${day.snow} mm/hr</p>
                             <p class="sunrise">Sunrise: ${sunrise()}</p>
                             <p class="sunset">Sunset: ${sunset()}</p>
-                            <h4 class="round-box large-box">Weather description: ${day.weather.description}</h4>
+                            <h4 class="round-box large-box"><i class="icon fas fa-cloud"></i> ${day.weather.description}</h4>
                         </div>
-                        <button id="btn-get-historical">What about past years?</button>
+                        <button id="btn-get-historical">check past years</button>
                         <div id="travel-info-historical" class="holder entry-holder"></div>
                     </div>`;
 
@@ -264,44 +265,44 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
         newElement.id = 'travel-info-historical';
         
         newElement.innerHTML = `<div class="holder result-header">
-            <h2 class="result-title">My trip to: ${city}, ${country}</h2>
-            <h2 class="result-date">Departing: ${travelDay(userInputDate)}</h2>
+            <h2 class="result-title"><i class="icon fas fa-map-marker-alt"></i> My trip to: ${city}, ${country}</h2>
+            <h2 class="result-date"><i class="icon far fa-calendar-check"></i> Departing: ${travelDay(userInputDate)}</h2>
         </div>
 
         <div class="result-body">
-            <div>
-                <p class="counter">${city}, ${country} is ${daysAway()}</p>
+            <div class="counter">
+                <i class="counter-icon far fa-clock"></i>
+                <p class="counter-text">${city}, ${country} is ${daysAway()}</p>
             </div>
             
             <div class="weather-holder'>
-            
                 <h3 class="result-subtitle">Historical weather on this same day for the past 3 years:</h3>
 
                 <div class="round-box-holder">
-                    <h4 class="result-year">${historicalDate(oneYearAgo)}</h4>
+                    <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(oneYearAgo)}</h4>
                     <p class="low-temp">Low: ${oneYearMinTemp} °C</p>
                     <p class="high-temp">High: ${oneYearMaxTemp} °C</p>
                     <p class="chance-of-rain">Rain record: It rained over ${oneYearRainPercent}% of the day.</p>
                     <p class="snow-record">Snow record: ${oneYearSnowResult} cm</p>
-                    <p class="round-box large-box">Weather description: ${oneYearDescription}</p>
+                    <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${oneYearDescription}</p>
                 </div>
 
                 <div class="round-box-holder">
-                    <h4 class="result-year">${historicalDate(twoYearsAgo)}</h4>
+                    <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(twoYearsAgo)}</h4>
                     <p class="low-temp">Low: ${twoYearsMinTemp} °C</p>
                     <p class="high-temp">High: ${twoYearsMaxTemp} °C</p>
                     <p class="chance-of-rain">Rain record: It rained over ${twoYearsRainPercent}% of the day.</p>
                     <p class="snow-record">Snow record: ${twoYearsSnowResult} cm</p>
-                    <p class="round-box large-box">Weather description: ${twoYearsDescription}</p>
+                    <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${twoYearsDescription}</p>
                 </div>
 
                 <div class="round-box-holder">
-                    <h4 class="result-year">${historicalDate(threeYearsAgo)}</h4>
+                    <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(threeYearsAgo)}</h4>
                     <p class="low-temp">Low: ${threeYearsMinTemp} °C</p>
                     <p class="high-temp">High: ${threeYearsMaxTemp} °C</p>
                     <p class="chance-of-rain">Rain record: It rained over ${threeYearsRainPercent}% of the day.</p>
                     <p class="snow-record">Snow record: ${threeYearsSnowResult} cm</p>
-                    <p class="round-box large-box">Weather description: ${threeYearsDescription}</p>
+                    <p class="round-box large-box"><i class="fas fa-cloud"></i> ${threeYearsDescription}</p>
                 </div>
             </div>
         </div>

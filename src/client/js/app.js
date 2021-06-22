@@ -161,7 +161,7 @@ function init(){
                         .then(newObj =>{
                             
                             console.log('primary preview:', newObj)
-                            updateUI(newObj, travelDate, primaryData, travelID)
+                            updateUI(newObj, travelDate, primaryData, travelNumber)
                         });
 
                     }catch(err){
