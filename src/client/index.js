@@ -1,5 +1,5 @@
-import { init } from './js/app'
-import './js/flatpickr'
+import { init } from './js/app'; //import main function
+import './js/flatpickr'; //import date picker
 
 import './styles/base.scss'
 

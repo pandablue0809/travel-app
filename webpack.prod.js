@@ -28,7 +28,14 @@ module.exports = {
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: 'asset/resource',  //isssssssssso
+                type: 'asset/resource',
+            },
+            {
+                test: /\.(svg|eot|woff|woff2|ttf)$/,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'fonts'
+                }
             }
         ]
     },
