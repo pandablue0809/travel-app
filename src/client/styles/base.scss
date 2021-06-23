@@ -1,2 +1,19 @@
 @import '~flatpickr/dist/flatpickr'; //import Flatpickr date picker
 @import '~@fortawesome/fontawesome-free/css/all.css'; //import Font Awesome Icons
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    margin: auto;
+}
