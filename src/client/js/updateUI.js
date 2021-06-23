@@ -54,31 +54,49 @@ function updateUIHistoricWeather(apiObject, id){
     newElement.setAttribute('class', 'weather-holder');
     newElement.innerHTML = `<h3 class="result-subtitle">Historical weather on this same day for the past 3 years:</h3>
 
-        <div class="round-box-holder">
-            <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(oneYearAgo)}</h4>
+        <div class="past-years-holder">
+            <div class="weather-past-years">
+                <i class="icon-travel-weather far fa-calendar"></i>
+                <h4 class="result-year">${historicalDate(oneYearAgo)}</h4>
+            </div>
             <p class="low-temp">Low: ${oneYearMinTemp} °C</p>
             <p class="high-temp">High: ${oneYearMaxTemp} °C</p>
             <p class="chance-of-rain">Rain record: It rained over ${oneYearRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${oneYearSnowResult} cm</p>
-            <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${oneYearDescription}</p>
+            <div class="weather-description">
+                <i class="icon-travel-weather fas fa-cloud"></i>
+                <p class="round-box large-box"> ${oneYearDescription}</p>
+            </div>
         </div>
 
-        <div class="round-box-holder">
-            <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(twoYearsAgo)}</h4>
+        <div class="past-years-holder">
+            <div class="weather-past-years">
+                <i class="icon-travel-weather far fa-calendar"></i>
+                <h4 class="result-year">${historicalDate(twoYearsAgo)}</h4>
+            </div>
             <p class="low-temp">Low: ${twoYearsMinTemp} °C</p>
             <p class="high-temp">High: ${twoYearsMaxTemp} °C</p>
             <p class="chance-of-rain">Rain record: It rained over ${twoYearsRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${twoYearsSnowResult} cm</p>
-            <p class="round-box large-box"><i class="icon fas fa-cloud"></i>: ${twoYearsDescription}</p>
+            <div class="weather-description">
+                <i class="icon-travel-weather fas fa-cloud"></i>
+                <p class="round-box large-box"> ${twoYearsDescription}</p>
+            </div>
         </div>
 
-        <div class="round-box-holder">
-            <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(threeYearsAgo)}</h4>
+        <div class="past-years-holder">
+            <div class="weather-past-years">
+                <i class="icon-travel-weather far fa-calendar"></i>
+                <h4 class="result-year">${historicalDate(threeYearsAgo)}</h4>
+            </div>
             <p class="low-temp">Low: ${threeYearsMinTemp} °C</p>
             <p class="high-temp">High: ${threeYearsMaxTemp} °C</p>
             <p class="chance-of-rain">Rain record: It rained over ${threeYearsRainPercent}% of the day.</p>
             <p class="snow-record">Snow record: ${threeYearsSnowResult} cm</p>
-            <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${threeYearsDescription}</p>
+            <div class="weather-description">
+                <i class="icon-travel-weather fas fa-cloud"></i>
+                <p class="round-box large-box"> ${threeYearsDescription}</p>
+            </div>
         </div>`;
 
         section.insertAdjacentElement('beforeend', newElement);
@@ -171,12 +189,18 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
                     newElement.setAttribute('class', 'holder info-holder');
                     newElement.setAttribute('weather-travel-number', `${id}`);
                     newElement.innerHTML = `<div class="holder result-header">
-                        <h2 class="result-title"><i class="icon fas fa-map-marker-alt"></i> My trip to: ${city}, ${country}</h2>
-                        <h2 class="result-date"><i class="icon far fa-calendar-check"></i> Departing: ${travelDay(userInputDate)}</h2>
+                        <div class="travel-data">
+                            <i class="icon-travel-info fas fa-map-marker-alt"></i>
+                            <h2 class="travel-summary"><span class="travel-summary-info">My trip to: </span>${city}, ${country}</h2>
+                        </div>
+                        <div class="travel-data">
+                            <i class="icon-travel-info far fa-calendar-check"></i>
+                            <h2 class="travel-summary"><span class="travel-summary-info">Departing: </span>${travelDay(userInputDate)}</h2>
+                        </div>
                     </div>
                     <div class="result-body">
                         <div class="counter">
-                            <i class="icon counter-icon far fa-clock"></i>
+                            <i class="counter-icon far fa-clock"></i>
                             <p class="counter-text">${city}, ${country} is ${daysAway()}</p>
                         </div>
                     
@@ -188,7 +212,10 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
                             <p class="snow-record">Snowfall: ${day.snow} mm/hr</p>
                             <p class="sunrise">Sunrise: ${sunrise()}</p>
                             <p class="sunset">Sunset: ${sunset()}</p>
-                            <h4 class="round-box large-box"><i class="icon fas fa-cloud"></i> ${day.weather.description}</h4>
+                            <div class="weather-description">
+                                <i class="icon-travel-weather fas fa-cloud"></i>
+                                <h4 class="round-box large-box">${day.weather.description}</h4>
+                            </div>
                         </div>
                         <button id="btn-get-historical">check past years</button>
                         <div id="travel-info-historical" class="holder entry-holder"></div>
@@ -205,6 +232,7 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
                     document.getElementById('btn-get-historical').addEventListener('click', appendHistoricalWeather)
                     //const btn = document.querySelector('.remove-trip');
                     //btn.addEventListener('click', removeTrip);
+                    document.querySelector('.remove-trip').addEventListener('click', removeTrip)
                 }
             }
 
@@ -261,12 +289,18 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
         //const travelDiv = document.getElementById('travel-info');
         const fragment = document.createDocumentFragment();
         const newElement = document.createElement('div');
-        newElement.setAttribute('class', 'holder entry-holder');
+        newElement.setAttribute('class', 'holder info-holder');
         newElement.id = 'travel-info-historical';
         
         newElement.innerHTML = `<div class="holder result-header">
-            <h2 class="result-title"><i class="icon fas fa-map-marker-alt"></i> My trip to: ${city}, ${country}</h2>
-            <h2 class="result-date"><i class="icon far fa-calendar-check"></i> Departing: ${travelDay(userInputDate)}</h2>
+            <div class="travel-data">
+                <i class="icon-travel-info fas fa-map-marker-alt"></i>
+                <h2 class="travel-summary"><span class="travel-summary-info">My trip to: </span>${city}, ${country}</h2>
+            </div>
+            <div class="travel-data">
+                <i class="icon-travel-info far fa-calendar-check"></i>
+                <h2 class="travel-summary"><span class="travel-summary-info">Departing: </span>${travelDay(userInputDate)}</h2>
+            </div>
         </div>
 
         <div class="result-body">
@@ -275,43 +309,58 @@ function updateUI(apiObject, userInputDate, primaryDataObj, id){
                 <p class="counter-text">${city}, ${country} is ${daysAway()}</p>
             </div>
             
-            <div class="weather-holder'>
+            <div class="weather-holder">
                 <h3 class="result-subtitle">Historical weather on this same day for the past 3 years:</h3>
-
-                <div class="round-box-holder">
-                    <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(oneYearAgo)}</h4>
+                <div class="past-years-holder">
+                    <div class="weather-past-years">
+                        <i class="icon-travel-weather far fa-calendar"></i>
+                        <h4 class="result-year">${historicalDate(oneYearAgo)}</h4>
+                    </div>
                     <p class="low-temp">Low: ${oneYearMinTemp} °C</p>
                     <p class="high-temp">High: ${oneYearMaxTemp} °C</p>
                     <p class="chance-of-rain">Rain record: It rained over ${oneYearRainPercent}% of the day.</p>
                     <p class="snow-record">Snow record: ${oneYearSnowResult} cm</p>
-                    <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${oneYearDescription}</p>
+                    <div class="weather-description">
+                        <i class="icon-travel-weather fas fa-cloud"></i>
+                        <p class="round-box large-box"> ${oneYearDescription}</p>
+                    </div>
                 </div>
-
-                <div class="round-box-holder">
-                    <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(twoYearsAgo)}</h4>
+                <div class="past-years-holder">
+                    <div class="weather-past-years">
+                        <i class="icon-travel-weather far fa-calendar"></i>
+                        <h4 class="result-year">${historicalDate(twoYearsAgo)}</h4>
+                    </div>
                     <p class="low-temp">Low: ${twoYearsMinTemp} °C</p>
                     <p class="high-temp">High: ${twoYearsMaxTemp} °C</p>
                     <p class="chance-of-rain">Rain record: It rained over ${twoYearsRainPercent}% of the day.</p>
                     <p class="snow-record">Snow record: ${twoYearsSnowResult} cm</p>
-                    <p class="round-box large-box"><i class="icon fas fa-cloud"></i> ${twoYearsDescription}</p>
+                    <div class="weather-description">
+                        <i class="icon-travel-weather fas fa-cloud"></i>
+                        <p class="round-box large-box"> ${twoYearsDescription}</p>
+                    </div>
                 </div>
-
-                <div class="round-box-holder">
-                    <h4 class="result-year"><i class="icon far fa-calendar"></i>${historicalDate(threeYearsAgo)}</h4>
+                <div class="past-years-holder">
+                    <div class="weather-past-years">
+                        <i class="icon-travel-weather far fa-calendar"></i>
+                        <h4 class="result-year">${historicalDate(threeYearsAgo)}</h4>
+                    </div>
                     <p class="low-temp">Low: ${threeYearsMinTemp} °C</p>
                     <p class="high-temp">High: ${threeYearsMaxTemp} °C</p>
                     <p class="chance-of-rain">Rain record: It rained over ${threeYearsRainPercent}% of the day.</p>
                     <p class="snow-record">Snow record: ${threeYearsSnowResult} cm</p>
-                    <p class="round-box large-box"><i class="fas fa-cloud"></i> ${threeYearsDescription}</p>
+                    <div class="weather-description">
+                        <i class="icon-travel-weather fas fa-cloud"></i>
+                        <p class="round-box large-box"> ${threeYearsDescription}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <button id="remove-trip">Delete Trip</button>`;
+        <button class="remove-trip">Delete Trip</button>`;
 
         fragment.appendChild(newElement);
         travelDiv.appendChild(fragment);
 
-        document.getElementById('remove-trip').addEventListener('click', removeTrip)
+        document.querySelector('.remove-trip').addEventListener('click', removeTrip)
     }
 }
 

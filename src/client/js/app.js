@@ -105,7 +105,7 @@ function init(){
 
             const section = document.getElementById('results');
             const divTripInfo = document.createElement('div');
-            divTripInfo.setAttribute('class', 'holder trip-holder');
+            divTripInfo.setAttribute('class', 'trip-holder');
             travelNumber += 1;
             divTripInfo.setAttribute('data-travel-number', `${travelNumber}`);
             section.insertAdjacentElement('afterbegin', divTripInfo);

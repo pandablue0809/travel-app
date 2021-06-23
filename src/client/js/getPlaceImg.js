@@ -31,7 +31,8 @@ const getPlaceImg = async(primaryObj, baseUrl, apiKey)=>{
             return primaryObj;
 
         }catch(err){
-
+            const replace = await respTwo.json();
+            return replace;
             console.log('Error getting country image from Pixabay', err);
         }
 
