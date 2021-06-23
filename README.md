@@ -1,4 +1,4 @@
-# Note: Under development
+# v1.0
 
 # Front End Web Developer Nanodegree - Capstone: Travel Planner Web App
 
