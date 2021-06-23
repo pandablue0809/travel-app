@@ -8,6 +8,7 @@ import { validateForm } from './formValidator'
 import { getHistoricWeather } from './getHistoricWeather'
 import { getPlaceImg } from './getPlaceImg'
 import { displayImg } from './displayImg'
+import { scrollTo } from './footerButtons'
 
 //Primary Object to hold data from GeoNames API
 var primaryData = {};
@@ -86,6 +87,9 @@ const TravelNumberCounter = (counter)=>{
 
 //Wrapping functionalities in a init() function to be executed only after DOM is ready
 function init(){
+
+    // Footer button - Scroll to section on click
+    document.querySelector('.footer-link').addEventListener('click', scrollTo);
 
     //Adding event listener to the 'form' DOM element (in the 'submit' button)
     document.getElementById('generate').addEventListener('click', performAction);
