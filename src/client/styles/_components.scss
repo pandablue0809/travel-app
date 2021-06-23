@@ -63,3 +63,14 @@
     font-size: $font-app;
     color: rgba(0, 0, 0, 0.25);
 }
+
+.footer-link {
+    font-size: 30px;
+    border-style: none;
+    background-color: $secondary-color;
+    color: $shade-secondary-color;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    display: block;
+}
