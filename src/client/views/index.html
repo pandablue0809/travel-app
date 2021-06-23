@@ -52,5 +52,16 @@
                 </ul>
             </nav>>
         </footer>
+        <script>
+            //Check if browser support service workers
+            if('serviceWorker' in navigator){
+
+                //use Window Load event to keep page loading
+                window.addEventListener('load', ()=>{
+
+                    navigator.serviceWorker.register('/service-worker.js');
+                });
+            }
+        </script>
     </body>
 </html>
