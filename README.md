@@ -1,4 +1,4 @@
-# v1.0
+# ~v1.0
 
 # Front End Web Developer Nanodegree - Capstone: Travel Planner Web App
 
@@ -15,7 +15,7 @@ It works by getting a desired trip location and date from the user, then display
 * Building a web app that allows users to to plan their trips based on predicted weather forecasts for the location they are travelling to.
 
 * The goal of this project is to get practice with:
-  - Setting up a server enviroment
+  - Setting up a server environment
   - Setting up Webpack
   - Sass styles
   - Webpack Loaders and Plugins
@@ -35,6 +35,13 @@ It works by getting a desired trip location and date from the user, then display
 * Project rubric: 
 
 Check out the specifications [here](https://review.udacity.com/#!/rubrics/2669/view).
+
+## Project Extension
+
+Some extra features were included in this project:
+
+- Pull in an image for the country from Pixabay API when the entered location brings up no results (good for obscure localities).
+- Allow the user to remove the trip.
 
 ## Getting Started
 
