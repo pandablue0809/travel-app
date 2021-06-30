@@ -14,7 +14,7 @@ import { scrollTo } from './footerButtons'
 var primaryData = {};
 
 //* APIs keys *//
-const geoNamesBaseURL = 'http://api.geonames.org/searchJSON?q='
+const geoNamesBaseURL = 'https://secure.geonames.org/searchJSON?q='
 const geoNamesKey = 'janainamj'
 const weatherBitBaseURL = 'https://api.weatherbit.io/v2.0/forecast/daily?'
 const weatherBitKey = '723118fb280a46d5bc650aaaa26b3479'
