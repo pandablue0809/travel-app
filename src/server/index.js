@@ -1,6 +1,6 @@
 const app = require('./server')
 
-const port = 8081;
+const port = process.env.PORT || 8081;
 const server = app.listen(process.env.PORT || port, listening);
 
 function listening(){
