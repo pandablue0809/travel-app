@@ -1,7 +1,7 @@
 const app = require('./server')
 
 const port = 8081;
-const server = app.listen(port, listening);
+const server = app.listen(process.env.PORT || port, listening);
 
 function listening(){
     console.log('Server Running');
