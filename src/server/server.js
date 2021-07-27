@@ -14,6 +14,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+// 'x-forwarded-proto' header for Heroku proxy
+app.get('*',function(req,res,next){
+
+    if(req.headers['x-forwarded-proto'] != 'https'){
+
+        res.redirect('https://mypreferreddomain.com'+req.url)
+
+    }else {
+        next() /* Continue to other routes if we're not redirecting */
+    }
+})
+
 //Building my own proxy
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
