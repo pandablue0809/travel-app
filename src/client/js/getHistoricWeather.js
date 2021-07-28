@@ -4,9 +4,9 @@ import { callApiViaServerSide } from "./postRequestToServer"
 free API registration plan limitation */
 const getHistoricWeather = async (obj, apiUrl1, apiUrl2, apiUrl3)=>{
 
-    const respOne = await callApiViaServerSide('http://localhost:8081/callAPI', {urlBase:apiUrl1})
-    const respTwo = await callApiViaServerSide('http://localhost:8081/callAPI', {urlBase:apiUrl2})
-    const respThree = await callApiViaServerSide('http://localhost:8081/callAPI', {urlBase:apiUrl3})
+    const respOne = await callApiViaServerSide('/callAPI', {urlBase:apiUrl1})
+    const respTwo = await callApiViaServerSide('/callAPI', {urlBase:apiUrl2})
+    const respThree = await callApiViaServerSide('/callAPI', {urlBase:apiUrl3})
 
     try{
 

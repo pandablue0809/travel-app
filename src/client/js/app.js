@@ -140,7 +140,7 @@ function init(){
 
                     try{
                         //building url using 'lat' and 'long' parameters to call weatherBit API via server side
-                        callApiViaServerSide('http://localhost:8081/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
+                        callApiViaServerSide('/callAPI', {urlBase: `${weatherBitBaseURL}lat=${primaryData.latitude}&lon=${primaryData.longitude}&key=${weatherBitKey}`})
                         
                         .then((newData) => {
 
