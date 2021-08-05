@@ -10,6 +10,10 @@ This is a single page web app, which includes a simple form where you enter the 
 
 It works by getting a desired trip location and date from the user, then displaying weather and an image of the location using information obtained from external APIs.
 
+### https://got-a-plan.herokuapp.com
+
+![got-a-plan-demonstration](https://user-images.githubusercontent.com/78409024/128229001-19e0ad3e-760d-42ee-b415-975ce8d46922.gif)
+
 ## Project Intro
 
 * Building a web app that allows users to to plan their trips based on predicted weather forecasts for the location they are travelling to.
@@ -74,7 +78,7 @@ The development version of the app will be running in your browser on localhost:
 (the page will automatically update in the browser after any code change)
 
 
-### Testing
+### Testing Unit
 
 This project has a Testing Unit to check if the main functions are working correctly.
 Testing is done with [Jest](https://jestjs.io/). 
