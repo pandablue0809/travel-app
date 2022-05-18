@@ -10,9 +10,11 @@ This is a single page web app, which includes a simple form where you enter the 
 
 It works by getting a desired trip location and date from the user, then displaying weather and an image of the location using information obtained from external APIs.
 
+### 👀 Check it Out:
 ### https://got-a-plan.herokuapp.com
 
 ![got-a-plan-demonstration](https://user-images.githubusercontent.com/78409024/128229001-19e0ad3e-760d-42ee-b415-975ce8d46922.gif)
+
 
 ## Project Intro
 
