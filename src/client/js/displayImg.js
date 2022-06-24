@@ -14,7 +14,7 @@ function displayImg(primaryObj, id){
             newElement.setAttribute('alt', `picture of the destination`);
             newElement.setAttribute('src', `${defaultImg}`);
             newElement.setAttribute('class', 'travel-img');
-            travelDiv.appendChild(newElement)
+            travelDiv.insertAdjacentElement("afterbegin",newElement);
             
 
         } else if(placeImg === undefined){
@@ -23,7 +23,7 @@ function displayImg(primaryObj, id){
             newElement.setAttribute('alt', `picture of the destination`);
             newElement.setAttribute('src', `${countryImg}`);
             newElement.setAttribute('class', 'travel-img');
-            travelDiv.appendChild(newElement);
+            travelDiv.insertAdjacentElement("afterbegin",newElement);
             
         }else{
 
@@ -32,7 +32,7 @@ function displayImg(primaryObj, id){
             newElement.setAttribute('alt', `picture of the destination`);
             newElement.setAttribute('src', `${placeImg}`);
             newElement.setAttribute('class', 'travel-img');
-            travelDiv.appendChild(newElement);
+            travelDiv.insertAdjacentElement("afterbegin",newElement);
         }
         
     } catch(err){
