@@ -1,6 +1,6 @@
 # ~v1.0
 
-# Front End Web Developer Nanodegree - Capstone: Travel Planner Web App
+# Front End Web Developer Nanodegree - Capstone Project: Travel Planner Web App
 
 This is a project to [Udacity](https://www.udacity.com/us)'s Front End Web Developer nanodegree.
 
@@ -11,7 +11,7 @@ This is a single page web app, which includes a simple form where you enter the 
 It works by getting a desired trip location and date from the user, then displaying weather and an image of the location using information obtained from external APIs.
 
 ### 👀 Check it Out:
-### https://got-a-plan.herokuapp.com
+### https://gotaplan.onrender.com
 
 ![got-a-plan-demonstration](https://user-images.githubusercontent.com/78409024/128229001-19e0ad3e-760d-42ee-b415-975ce8d46922.gif)
 
