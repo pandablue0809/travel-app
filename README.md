@@ -56,7 +56,7 @@ Follow the steps below to get the project running.
 Clone this Github repository and use [NPM](https://www.w3schools.com/whatis/whatis_npm.asp) to install all the dependencies listed in the _package.json_ file:
 
 ```
-$ git clone https://github.com/Janaina-MJ/FEND-Capstone-travel-app.git
+$ git clone https://github.com/pandablue0809/travel-app/edit/main/README.md
 $ cd FEND-Capstone-travel-app
 $ npm install
 ```
